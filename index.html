@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Martin & Amparo 🤍</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --pink: #f4a7b9;
+      --rose: #e8738a;
+      --deep: #c0415a;
+      --dark: #1a0a10;
+      --cream: #fdf6f0;
+      --gold: #d4a95a;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--dark);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 40px 20px;
+      background: radial-gradient(ellipse at 20% 50%, #3d0b1e 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 50%, #1e0b30 0%, transparent 60%),
+                  #0f0509;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f4a7b9' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+
+    .floating-hearts {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart-particle {
+      position: absolute;
+      font-size: 1rem;
+      opacity: 0;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    .tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--pink);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      opacity: 0.85;
+      animation: fadeDown 1s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #fde8ef, #f4a7b9, #d4a95a, #f4a7b9);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s ease infinite, fadeDown 1s ease 0.2s both;
+      margin-bottom: 10px;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50%       { background-position: 100% 50%; }
+    }
+
+    .ampersand {
+      font-style: italic;
+      color: var(--gold);
+      -webkit-text-fill-color: var(--gold);
+    }
+
+    .hero-date {
+      font-size: clamp(0.75rem, 1.8vw, 0.9rem);
+      color: rgba(244, 167, 185, 0.6);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 56px;
+      animation: fadeDown 1s ease 0.4s both;
+    }
+
+    /* ── PHOTOS ── */
+    .photos-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      animation: fadeUp 1.2s ease 0.6s both;
+      position: relative;
+      z-index: 1;
+    }
+
+    .photo-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .photo-frame {
+      position: relative;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(135deg, var(--pink), var(--gold), var(--rose), var(--pink));
+      background-size: 300% 300%;
+      animation: shimmer 4s ease infinite;
+      box-shadow: 0 0 40px rgba(244, 167, 185, 0.35),
+                  0 0 80px rgba(200, 60, 90, 0.2);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .photo-frame:hover {
+      transform: scale(1.05) translateY(-6px);
+      box-shadow: 0 10px 60px rgba(244, 167, 185, 0.5),
+                  0 0 100px rgba(200, 60, 90, 0.3);
+    }
+
+    .photo-frame img {
+      border-radius: 50%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .photo-amparo .photo-frame img {
+      width: 220px;
+      height: 220px;
+    }
+
+    .photo-martin .photo-frame img {
+      width: 180px;
+      height: 180px;
+    }
+
+    .photo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--cream);
+      text-align: center;
+    }
+
+    .photo-name span {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--pink);
+      letter-spacing: 2px;
+      margin-top: 2px;
+    }
+
+    .heart-connector {
+      font-size: 2.5rem;
+      align-self: center;
+      animation: pulse 1.5s ease-in-out infinite;
+      margin-bottom: 30px;
+      filter: drop-shadow(0 0 12px rgba(244, 80, 110, 0.7));
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.25); }
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.45;
+      animation: bounce 2s ease infinite;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--pink);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── SECTION BASE ── */
+    .section {
+      padding: 100px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--pink);
+      opacity: 0.75;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 700;
+      text-align: center;
+      color: var(--cream);
+      margin-bottom: 60px;
+      line-height: 1.2;
+    }
+
+    .section-title em {
+      color: var(--pink);
+      font-style: italic;
+    }
+
+    /* ── TOGETHER COUNTER ── */
+    .together-section {
+      background: radial-gradient(ellipse at center, #2a0d1a 0%, #0f0509 70%);
+    }
+
+    .together-section .section-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 100px 24px;
+    }
+
+    .counter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+    }
+
+    .counter-box {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(244, 167, 185, 0.18);
+      border-radius: 20px;
+      padding: 36px 20px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .counter-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(244,167,185,0.06), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .counter-box:hover {
+      transform: translateY(-6px);
+      border-color: rgba(244, 167, 185, 0.45);
+      box-shadow: 0 12px 40px rgba(244, 80, 110, 0.2);
+    }
+
+    .counter-box:hover::before {
+      opacity: 1;
+    }
+
+    .counter-number {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 4rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #fde8ef, var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: -1px;
+    }
+
+    .counter-label {
+      font-size: 0.72rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(244, 167, 185, 0.7);
+    }
+
+    /* ── TRIP COUNTDOWN ── */
+    .trip-section {
+      background: radial-gradient(ellipse at center, #0d1a2a 0%, #0f0509 70%);
+    }
+
+    .trip-section .section-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 100px 24px;
+    }
+
+    .trip-section .counter-number {
+      background: linear-gradient(135deg, #d4f0ff, #7ec8e3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .trip-section .counter-box {
+      border-color: rgba(126, 200, 227, 0.18);
+    }
+
+    .trip-section .counter-box:hover {
+      border-color: rgba(126, 200, 227, 0.45);
+      box-shadow: 0 12px 40px rgba(50, 150, 200, 0.2);
+    }
+
+    .trip-section .section-label {
+      color: #7ec8e3;
+    }
+
+    .trip-section .counter-label {
+      color: rgba(126, 200, 227, 0.7);
+    }
+
+    .trip-return {
+      text-align: center;
+      margin-top: 36px;
+      font-size: 0.85rem;
+      color: rgba(126, 200, 227, 0.5);
+      letter-spacing: 2px;
+    }
+
+    .trip-return strong {
+      color: rgba(126, 200, 227, 0.85);
+    }
+
+    /* ── LOVE NOTE ── */
+    .love-section {
+      padding: 80px 24px;
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .love-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 3vw, 1.65rem);
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--cream);
+      opacity: 0.9;
+      position: relative;
+    }
+
+    .love-quote::before,
+    .love-quote::after {
+      content: '"';
+      font-size: 4rem;
+      color: var(--pink);
+      opacity: 0.3;
+      font-family: 'Playfair Display', serif;
+      line-height: 0;
+      vertical-align: -0.5em;
+    }
+
+    .love-quote::before { margin-right: 6px; }
+    .love-quote::after  { margin-left: 6px; }
+
+    .love-signature {
+      margin-top: 28px;
+      font-size: 0.78rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--pink);
+      opacity: 0.6;
+    }
+
+    /* ── COUPLE PHOTO ── */
+    .couple-section {
+      padding: 70px 24px 0;
+      background: radial-gradient(ellipse at center, #1e0b1a 0%, #0f0509 70%);
+    }
+
+    .couple-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .couple-frame-wrap {
+      display: inline-block;
+      padding: 5px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, var(--pink), var(--gold), var(--rose), var(--pink));
+      background-size: 300% 300%;
+      animation: shimmer 4s ease infinite;
+      box-shadow: 0 0 50px rgba(244, 167, 185, 0.3), 0 0 100px rgba(200, 60, 90, 0.15);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .couple-frame-wrap:hover {
+      transform: scale(1.02) translateY(-4px);
+      box-shadow: 0 10px 70px rgba(244, 167, 185, 0.45), 0 0 120px rgba(200, 60, 90, 0.25);
+    }
+
+    .couple-img {
+      display: block;
+      width: 100%;
+      max-width: 680px;
+      height: auto;
+      border-radius: 20px;
+      object-fit: cover;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--pink), transparent);
+      margin: 0 auto;
+      opacity: 0.4;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 48px 24px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 2px;
+    }
+
+    footer span {
+      color: var(--pink);
+      opacity: 0.6;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 520px) {
+      .photos-row { gap: 20px; }
+      .heart-connector { font-size: 2rem; margin-bottom: 20px; }
+      .photo-amparo .photo-frame img { width: 160px; height: 160px; }
+      .photo-martin .photo-frame img { width: 130px; height: 130px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating hearts background -->
+  <div class="floating-hearts" id="heartsContainer"></div>
+
+  <!-- ══════════════ HERO ══════════════ -->
+  <section class="hero">
+    <p class="tagline">Una historia de amor</p>
+    <h1 class="hero-title">Amparo <span class="ampersand">&</span> Martín</h1>
+    <p class="hero-date">Desde el 26 de septiembre de 2025 · 2:25 AM</p>
+
+    <div class="photos-row">
+      <div class="photo-card photo-amparo">
+        <div class="photo-frame">
+          <img src="amparo.jpg" alt="Amparo Reinoso" onerror="this.src='https://placehold.co/220x220/2a0d1a/f4a7b9?text=Amparo'" />
+        </div>
+        <div class="photo-name">
+          Amparo Reinoso
+          <span>mi amor</span>
+        </div>
+      </div>
+
+      <div class="heart-connector">🤍</div>
+
+      <div class="photo-card photo-martin">
+        <div class="photo-frame">
+          <img src="martin.jpg" alt="Martín González" onerror="this.src='https://placehold.co/180x180/0d1a2a/7ec8e3?text=Mart%C3%ADn'" />
+        </div>
+        <div class="photo-name">
+          Martín González
+          <span>su novio</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      scroll
+    </div>
+  </section>
+
+  <!-- ══════════════ COUPLE PHOTO ══════════════ -->
+  <div class="couple-section">
+    <div class="couple-inner">
+      <p class="section-label">Nosotros</p>
+      <div class="couple-frame-wrap">
+        <img src="juntos.jpg" alt="Amparo y Martín" class="couple-img" onerror="this.parentElement.style.display='none'" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TOGETHER COUNTER ══════════════ -->
+  <div class="together-section">
+    <div class="section-inner">
+      <p class="section-label">Llevamos juntos</p>
+      <h2 class="section-title">Cada momento <em>cuenta</em> ✨</h2>
+
+      <div class="counter-grid">
+        <div class="counter-box">
+          <div class="counter-number" id="together-months">0</div>
+          <div class="counter-label">Meses</div>
+        </div>
+        <div class="counter-box">
+          <div class="counter-number" id="together-days">0</div>
+          <div class="counter-label">Días</div>
+        </div>
+        <div class="counter-box">
+          <div class="counter-number" id="together-hours">0</div>
+          <div class="counter-label">Horas</div>
+        </div>
+        <div class="counter-box">
+          <div class="counter-number" id="together-minutes">0</div>
+          <div class="counter-label">Minutos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ LOVE QUOTE ══════════════ -->
+  <div style="padding: 80px 24px; max-width: 680px; margin: 0 auto; text-align: center;">
+    <div class="divider" style="margin-bottom: 64px;"></div>
+    <p class="love-quote">
+      En un mundo lleno de personas, encontrarte a vos fue el mejor accidente de mi vida.
+    </p>
+    <p class="love-signature">— Martín, para siempre</p>
+    <div class="divider" style="margin-top: 64px;"></div>
+  </div>
+
+  <!-- ══════════════ TRIP COUNTDOWN ══════════════ -->
+  <div class="trip-section">
+    <div class="section-inner">
+      <p class="section-label" style="color:#7ec8e3">La espera / el regreso</p>
+      <h2 class="section-title">Faltan para que <em style="color:#7ec8e3">vuelvas</em> ✈️</h2>
+
+      <div class="counter-grid">
+        <div class="counter-box">
+          <div class="counter-number" id="trip-months">0</div>
+          <div class="counter-label">Meses</div>
+        </div>
+        <div class="counter-box">
+          <div class="counter-number" id="trip-days">0</div>
+          <div class="counter-label">Días</div>
+        </div>
+        <div class="counter-box">
+          <div class="counter-number" id="trip-hours">0</div>
+          <div class="counter-label">Horas</div>
+        </div>
+        <div class="counter-box">
+          <div class="counter-number" id="trip-minutes">0</div>
+          <div class="counter-label">Minutos</div>
+        </div>
+      </div>
+
+      <p class="trip-return">Regreso: <strong>9 de julio de 2026</strong> — te espero con todo 🤍</p>
+    </div>
+  </div>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer>
+    Hecho con <span>♥</span> por Martín para Amparo &nbsp;·&nbsp; 2025 – 2026
+  </footer>
+
+  <!-- ══════════════ SCRIPTS ══════════════ -->
+  <script>
+    /* ── Floating hearts ── */
+    const container = document.getElementById('heartsContainer');
+    const HEARTS = ['🤍', '💗', '🌸', '✨', '💕'];
+    for (let i = 0; i < 22; i++) {
+      const el = document.createElement('span');
+      el.className = 'heart-particle';
+      el.textContent = HEARTS[Math.floor(Math.random() * HEARTS.length)];
+      el.style.left       = Math.random() * 100 + 'vw';
+      el.style.animationDuration  = (8 + Math.random() * 14) + 's';
+      el.style.animationDelay     = (Math.random() * 12) + 's';
+      el.style.fontSize   = (0.7 + Math.random() * 1) + 'rem';
+      container.appendChild(el);
+    }
+
+    /* ── Together counter ── */
+    const START = new Date('2025-09-26T02:25:00');
+
+    function getTogetherTime() {
+      const now   = new Date();
+      const diff  = now - START; // ms
+
+      // Months: count full calendar months elapsed
+      let months = (now.getFullYear() - START.getFullYear()) * 12
+                 + (now.getMonth() - START.getMonth());
+      // Adjust if day/time of month hasn't arrived yet
+      const tempD = new Date(START);
+      tempD.setMonth(tempD.getMonth() + months);
+      if (tempD > now) months--;
+
+      // Days remaining after whole months
+      const afterMonths = new Date(START);
+      afterMonths.setMonth(afterMonths.getMonth() + months);
+      const remainMs    = now - afterMonths;
+      const totalSecs   = Math.floor(remainMs / 1000);
+      const days        = Math.floor(totalSecs / 86400);
+      const hours       = Math.floor((totalSecs % 86400) / 3600);
+      const minutes     = Math.floor((totalSecs % 3600) / 60);
+
+      return { months, days, hours, minutes };
+    }
+
+    /* ── Trip countdown ── */
+    const RETURN = new Date('2026-07-09T00:00:00');
+
+    function getTripCountdown() {
+      const now  = new Date();
+      if (now >= RETURN) return { months: 0, days: 0, hours: 0, minutes: 0, arrived: true };
+
+      const diff = RETURN - now;
+
+      let months = (RETURN.getFullYear() - now.getFullYear()) * 12
+                 + (RETURN.getMonth() - now.getMonth());
+      const tempD = new Date(now);
+      tempD.setMonth(tempD.getMonth() + months);
+      if (tempD > RETURN) months--;
+
+      const afterMonths = new Date(now);
+      afterMonths.setMonth(afterMonths.getMonth() + months);
+      const remainMs  = RETURN - afterMonths;
+      const totalSecs = Math.floor(remainMs / 1000);
+      const days      = Math.floor(totalSecs / 86400);
+      const hours     = Math.floor((totalSecs % 86400) / 3600);
+      const minutes   = Math.floor((totalSecs % 3600) / 60);
+
+      return { months, days, hours, minutes, arrived: false };
+    }
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function updateCounters() {
+      const t = getTogetherTime();
+      document.getElementById('together-months').textContent  = pad(t.months);
+      document.getElementById('together-days').textContent    = pad(t.days);
+      document.getElementById('together-hours').textContent   = pad(t.hours);
+      document.getElementById('together-minutes').textContent = pad(t.minutes);
+
+      const r = getTripCountdown();
+      if (r.arrived) {
+        document.getElementById('trip-months').textContent  = '00';
+        document.getElementById('trip-days').textContent    = '00';
+        document.getElementById('trip-hours').textContent   = '00';
+        document.getElementById('trip-minutes').textContent = '00';
+        document.querySelector('.trip-return').textContent  = '🎉 ¡Ya volvió! Bienvenida a casa, Ampi 🤍';
+      } else {
+        document.getElementById('trip-months').textContent  = pad(r.months);
+        document.getElementById('trip-days').textContent    = pad(r.days);
+        document.getElementById('trip-hours').textContent   = pad(r.hours);
+        document.getElementById('trip-minutes').textContent = pad(r.minutes);
+      }
+    }
+
+    updateCounters();
+    setInterval(updateCounters, 30000); // refresh every 30s
+  </script>
+</body>
+</html>
