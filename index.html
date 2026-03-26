@@ -417,41 +417,155 @@
       opacity: 0.6;
     }
 
-    /* ── COUPLE PHOTO ── */
+    /* ── COUPLE PHOTO SLIDESHOW ── */
     .couple-section {
-      padding: 70px 24px 0;
-      background: radial-gradient(ellipse at center, #1e0b1a 0%, #0f0509 70%);
+      padding: 80px 24px 20px;
+      background: radial-gradient(ellipse at 50% 30%, #2e0d1e 0%, #0f0509 70%);
     }
 
     .couple-inner {
-      max-width: 780px;
+      max-width: 820px;
       margin: 0 auto;
       text-align: center;
     }
 
-    .couple-frame-wrap {
+    .slideshow-wrapper {
+      position: relative;
       display: inline-block;
-      padding: 5px;
-      border-radius: 24px;
-      background: linear-gradient(135deg, var(--pink), var(--gold), var(--rose), var(--pink));
-      background-size: 300% 300%;
-      animation: shimmer 4s ease infinite;
-      box-shadow: 0 0 50px rgba(244, 167, 185, 0.3), 0 0 100px rgba(200, 60, 90, 0.15);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      width: 100%;
+      max-width: 720px;
     }
 
-    .couple-frame-wrap:hover {
-      transform: scale(1.02) translateY(-4px);
-      box-shadow: 0 10px 70px rgba(244, 167, 185, 0.45), 0 0 120px rgba(200, 60, 90, 0.25);
+    .couple-frame-wrap {
+      display: block;
+      padding: 5px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, var(--pink), var(--gold), var(--rose), #c070a0, var(--pink));
+      background-size: 400% 400%;
+      animation: shimmer 5s ease infinite;
+      box-shadow: 0 0 60px rgba(244, 130, 170, 0.35),
+                  0 0 120px rgba(200, 60, 90, 0.18),
+                  inset 0 0 20px rgba(255,255,255,0.03);
+    }
+
+    .slideshow {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: #1a0a10;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
     }
 
     .couple-img {
-      display: block;
       width: 100%;
-      max-width: 680px;
-      height: auto;
-      border-radius: 20px;
+      height: 100%;
       object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* Soft vignette overlay on each slide */
+    .slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 55%, rgba(15,5,9,0.55) 100%);
+      pointer-events: none;
+    }
+
+    /* Arrow buttons */
+    .slide-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(244, 167, 185, 0.12);
+      border: 1px solid rgba(244, 167, 185, 0.3);
+      color: var(--cream);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: background 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide-btn:hover {
+      background: rgba(244, 167, 185, 0.28);
+      border-color: rgba(244, 167, 185, 0.65);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .slide-btn.prev { left: -56px; }
+    .slide-btn.next { right: -56px; }
+
+    /* Dot indicators */
+    .slide-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(244, 167, 185, 0.25);
+      border: 1px solid rgba(244, 167, 185, 0.4);
+      cursor: pointer;
+      transition: background 0.35s ease, transform 0.25s ease;
+    }
+
+    .dot.active {
+      background: var(--pink);
+      transform: scale(1.35);
+      box-shadow: 0 0 8px rgba(244, 100, 140, 0.6);
+    }
+
+    /* Slide caption */
+    .slide-caption {
+      margin-top: 18px;
+      min-height: 28px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      color: rgba(253, 232, 239, 0.65);
+      letter-spacing: 1px;
+      transition: opacity 0.6s ease;
+    }
+
+    @media (max-width: 680px) {
+      .slide-btn.prev { left: 6px; }
+      .slide-btn.next { right: 6px; }
+      .slide-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.3rem;
+        background: rgba(15,5,9,0.55);
+      }
+      .slideshow { aspect-ratio: 3/4; }
     }
 
     /* ── DIVIDER ── */
@@ -511,7 +625,7 @@
     <div class="photos-row">
       <div class="photo-card photo-amparo">
         <div class="photo-frame">
-          <img src="amparo.jpg.jpeg" alt="Amparo Reinoso" onerror="this.src='https://placehold.co/220x220/2a0d1a/f4a7b9?text=Amparo'" />
+          <img src="amparo.jpeg" alt="Amparo Reinoso" onerror="this.src='https://placehold.co/220x220/2a0d1a/f4a7b9?text=Amparo'" />
         </div>
         <div class="photo-name">
           Amparo Reinoso
@@ -523,7 +637,7 @@
 
       <div class="photo-card photo-martin">
         <div class="photo-frame">
-          <img src="martin%20(1).jpeg" alt="Martín González" onerror="this.src='https://placehold.co/180x180/0d1a2a/7ec8e3?text=Mart%C3%ADn'" />
+          <img src="martin .jpeg" alt="Martín González" onerror="this.src='https://placehold.co/180x180/0d1a2a/7ec8e3?text=Mart%C3%ADn'" />
         </div>
         <div class="photo-name">
           Martín González
@@ -538,12 +652,28 @@
     </div>
   </section>
 
-  <!-- ══════════════ COUPLE PHOTO ══════════════ -->
+  <!-- ══════════════ COUPLE PHOTO SLIDESHOW ══════════════ -->
   <div class="couple-section">
     <div class="couple-inner">
-      <p class="section-label">Nosotros</p>
-      <div class="couple-frame-wrap">
-        <img src="juntos.jpg.png" alt="Amparo y Martín" class="couple-img" onerror="this.parentElement.style.display='none'" />
+      <p class="section-label">Nosotros ✨</p>
+      <div class="slideshow-wrapper">
+        <div class="couple-frame-wrap">
+          <div class="slideshow" id="slideshow">
+            <div class="slide active"><img src="juntos.png"  alt="Amparo y Martín" class="couple-img" /></div>
+            <div class="slide"><img src="foto1.jpg"  alt="Amparo y Martín" class="couple-img" /></div>
+            <div class="slide"><img src="foto2.jpg"  alt="Amparo y Martín" class="couple-img" /></div>
+            <div class="slide"><img src="foto3.jpg"  alt="Amparo y Martín" class="couple-img" /></div>
+            <div class="slide"><img src="foto4.jpg"  alt="Amparo y Martín" class="couple-img" /></div>
+            <div class="slide"><img src="foto5.jpg"  alt="Amparo y Martín" class="couple-img" /></div>
+            <div class="slide"><img src="foto6.jpg"  alt="Amparo y Martín" class="couple-img" /></div>
+            <div class="slide"><img src="foto7.jpg"  alt="Amparo y Martín" class="couple-img" /></div>
+            <div class="slide"><img src="foto8.jpg"  alt="Amparo y Martín" class="couple-img" /></div>
+          </div>
+        </div>
+        <button class="slide-btn prev" onclick="moveSlide(-1)" aria-label="Anterior">&#8249;</button>
+        <button class="slide-btn next" onclick="moveSlide(1)"  aria-label="Siguiente">&#8250;</button>
+        <div class="slide-dots" id="slideDots"></div>
+        <p class="slide-caption" id="slideCaption"></p>
       </div>
     </div>
   </div>
@@ -714,6 +844,71 @@
 
     updateCounters();
     setInterval(updateCounters, 30000); // refresh every 30s
+
+    /* ── Slideshow ── */
+    const captions = [
+      'Nuestro momento favorito 🤍',
+      'Juntos siempre 💗',
+      'Mi lugar favorito eres vos 🌸',
+      'Cada día contigo es un regalo ✨',
+      'Te amo hoy y siempre 💕',
+      'El amor de mi vida 🌹',
+      'Nuestro mundo 🤍',
+      'Infinito contigo 💗',
+      'Para siempre, Ampi 🌟',
+    ];
+
+    const slides     = Array.from(document.querySelectorAll('.slide'));
+    const dotsWrap   = document.getElementById('slideDots');
+    const captionEl  = document.getElementById('slideCaption');
+    let current      = 0;
+    let slideshowTimer;
+
+    // Build dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsWrap.appendChild(dot);
+    });
+
+    const dots = Array.from(dotsWrap.querySelectorAll('.dot'));
+
+    function goToSlide(n) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (n + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+      captionEl.style.opacity = '0';
+      setTimeout(() => {
+        captionEl.textContent = captions[current] || '';
+        captionEl.style.opacity = '1';
+      }, 400);
+      resetTimer();
+    }
+
+    function moveSlide(dir) { goToSlide(current + dir); }
+
+    function resetTimer() {
+      clearInterval(slideshowTimer);
+      slideshowTimer = setInterval(() => goToSlide(current + 1), 5000);
+    }
+
+    captionEl.textContent = captions[0];
+    resetTimer();
+
+    // Pause on hover
+    document.getElementById('slideshow').addEventListener('mouseenter', () => clearInterval(slideshowTimer));
+    document.getElementById('slideshow').addEventListener('mouseleave', resetTimer);
+
+    // Touch / swipe support
+    let touchStartX = 0;
+    document.getElementById('slideshow').addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+    document.getElementById('slideshow').addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) moveSlide(dx < 0 ? 1 : -1);
+    });
   </script>
 </body>
 </html>
