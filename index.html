@@ -453,8 +453,9 @@
       border-radius: 22px;
       overflow: hidden;
       width: 100%;
-      aspect-ratio: 4/3;
+      aspect-ratio: 4 / 3;
       background: #1a0a10;
+      transition: aspect-ratio 0.6s ease;
     }
 
     .slide {
@@ -544,18 +545,6 @@
       box-shadow: 0 0 8px rgba(244, 100, 140, 0.6);
     }
 
-    /* Slide caption */
-    .slide-caption {
-      margin-top: 18px;
-      min-height: 28px;
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: clamp(0.85rem, 2vw, 1rem);
-      color: rgba(253, 232, 239, 0.65);
-      letter-spacing: 1px;
-      transition: opacity 0.6s ease;
-    }
-
     @media (max-width: 680px) {
       .slide-btn.prev { left: 6px; }
       .slide-btn.next { right: 6px; }
@@ -565,7 +554,6 @@
         font-size: 1.3rem;
         background: rgba(15,5,9,0.55);
       }
-      .slideshow { aspect-ratio: 3/4; }
     }
 
     /* ── DIVIDER ── */
@@ -673,7 +661,6 @@
         <button class="slide-btn prev" onclick="moveSlide(-1)" aria-label="Anterior">&#8249;</button>
         <button class="slide-btn next" onclick="moveSlide(1)"  aria-label="Siguiente">&#8250;</button>
         <div class="slide-dots" id="slideDots"></div>
-        <p class="slide-caption" id="slideCaption"></p>
       </div>
     </div>
   </div>
@@ -846,22 +833,10 @@
     setInterval(updateCounters, 30000); // refresh every 30s
 
     /* ── Slideshow ── */
-    const captions = [
-      'Nuestro momento favorito 🤍',
-      'Juntos siempre 💗',
-      'Mi lugar favorito eres vos 🌸',
-      'Cada día contigo es un regalo ✨',
-      'Te amo hoy y siempre 💕',
-      'El amor de mi vida 🌹',
-      'Nuestro mundo 🤍',
-      'Infinito contigo 💗',
-      'Para siempre, Ampi 🌟',
-    ];
-
-    const slides     = Array.from(document.querySelectorAll('.slide'));
-    const dotsWrap   = document.getElementById('slideDots');
-    const captionEl  = document.getElementById('slideCaption');
-    let current      = 0;
+    const slideshowEl = document.getElementById('slideshow');
+    const slides      = Array.from(document.querySelectorAll('.slide'));
+    const dotsWrap    = document.getElementById('slideDots');
+    let current       = 0;
     let slideshowTimer;
 
     // Build dots
@@ -874,17 +849,25 @@
 
     const dots = Array.from(dotsWrap.querySelectorAll('.dot'));
 
+    // Adapt the frame to the natural dimensions of the current slide's image
+    function updateAspectRatio() {
+      const img = slides[current].querySelector('img');
+      const apply = () => {
+        if (img.naturalWidth && img.naturalHeight) {
+          slideshowEl.style.aspectRatio = img.naturalWidth + ' / ' + img.naturalHeight;
+        }
+      };
+      if (img.complete && img.naturalWidth) { apply(); }
+      else { img.addEventListener('load', apply, { once: true }); }
+    }
+
     function goToSlide(n) {
       slides[current].classList.remove('active');
       dots[current].classList.remove('active');
       current = (n + slides.length) % slides.length;
       slides[current].classList.add('active');
       dots[current].classList.add('active');
-      captionEl.style.opacity = '0';
-      setTimeout(() => {
-        captionEl.textContent = captions[current] || '';
-        captionEl.style.opacity = '1';
-      }, 400);
+      updateAspectRatio();
       resetTimer();
     }
 
@@ -895,17 +878,17 @@
       slideshowTimer = setInterval(() => goToSlide(current + 1), 5000);
     }
 
-    captionEl.textContent = captions[0];
+    updateAspectRatio();
     resetTimer();
 
     // Pause on hover
-    document.getElementById('slideshow').addEventListener('mouseenter', () => clearInterval(slideshowTimer));
-    document.getElementById('slideshow').addEventListener('mouseleave', resetTimer);
+    slideshowEl.addEventListener('mouseenter', () => clearInterval(slideshowTimer));
+    slideshowEl.addEventListener('mouseleave', resetTimer);
 
     // Touch / swipe support
     let touchStartX = 0;
-    document.getElementById('slideshow').addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
-    document.getElementById('slideshow').addEventListener('touchend',   e => {
+    slideshowEl.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+    slideshowEl.addEventListener('touchend',   e => {
       const dx = e.changedTouches[0].clientX - touchStartX;
       if (Math.abs(dx) > 40) moveSlide(dx < 0 ? 1 : -1);
     });
